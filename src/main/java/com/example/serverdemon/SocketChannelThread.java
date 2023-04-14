@@ -16,8 +16,6 @@ import java.util.Set;
 @Slf4j
 public class SocketChannelThread extends Thread{
     InetSocketAddress addr = new InetSocketAddress("localhost", 7777);
-//    private static final String EXIT = "EXIT";
-    public static long runTime = 0;
 
     public void run() {
 
@@ -28,9 +26,9 @@ public class SocketChannelThread extends Thread{
             serverSocket.socket().bind(this.addr);				//서버주소 지정
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);	//연결요청 수락모드로 설정
 
-            ByteBuffer buffer = ByteBuffer.allocate(256);
 
             while (!Thread.currentThread().isInterrupted()) {
+                ByteBuffer buffer = ByteBuffer.allocate(1024);
 
                 if(selector.select()>0){
                     Set<SelectionKey> selectedKeys = selector.selectedKeys();
@@ -56,7 +54,7 @@ public class SocketChannelThread extends Thread{
                             log.info("readable");
                             System.out.format("Writable is activated.%n");
                         }
-                        it.remove();
+                    it.remove();
                     }
                 }
 
@@ -76,6 +74,8 @@ public class SocketChannelThread extends Thread{
         buffer.clear();
 
         int bytesRead = client.read(buffer);
+        log.info("bytesRead : {}",bytesRead);
+
         if (bytesRead == -1) {						//연결이 끊어졌을 때
             throw new InterruptedException();
         }
@@ -94,9 +94,4 @@ public class SocketChannelThread extends Thread{
         }
     }
 
-
-    private static long diffTime(long runTime) {
-        runTime = (System.currentTimeMillis() - runTime) / 1000;
-        return runTime;
-    }
 }
