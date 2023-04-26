@@ -57,6 +57,7 @@ public class SocketChannelThread extends Thread{
 
                         it.remove();
                     }
+                    Thread.sleep(100);
                 }
             }
             serverSocketChannel.close();
