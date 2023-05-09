@@ -44,9 +44,9 @@ public class SocketChannelThread extends Thread{
     private void recvMessage() throws IOException, InterruptedException {
         log.info("recvMessage");
 
-        //타이머 2초 적용
+        //타이머 5초 적용
 //        long timeout = 5000;
-//        long sleep = Math.min(timeout, 100);
+//        long sleep = Math.min(timeout, 1000);
 //
 //        while (timeout > 0) {
 //            if (selector.select(sleep) < 1) {  //Select 값이 0이면 채널 없음 0이 아니면 채널 있음 1초마다 찾아보기
